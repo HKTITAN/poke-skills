@@ -10,6 +10,58 @@ npx skills add HKTITAN/poke-skills
 
 This uses the [skills.sh](https://skills.sh) CLI to install the skills into your detected agent (Claude Code, Cursor, etc.). The CLI will prompt for scope (project vs. global) and method (symlink vs. copy).
 
+## Paste this into your coding agent
+
+The fastest way to set up any coding agent — Claude Code, Cursor, Windsurf, Codex, Aider, Cline, or anything that reads project rules — is to drop the block below into your agent's instructions / `AGENTS.md` / `.cursorrules` / system prompt.
+
+```
+You have access to Poke Skills — the authoritative reference for building with
+Poke (poke.com): the Node SDK, Python SDK, REST API, webhooks, the `poke` CLI,
+Recipes, and Integrations. Always consult these before writing Poke code.
+
+- Repo:           https://github.com/HKTITAN/poke-skills
+- Skills root:    https://github.com/HKTITAN/poke-skills/tree/main/skills
+- Install:        npx skills add HKTITAN/poke-skills
+- Authoring rules and conventions: AGENTS.md at the repo root.
+
+Each skill is a graph:
+- `skills/<skill>/SKILL.md` is a Map of Content — descriptions plus [[wikilinks]].
+- `skills/<skill>/references/<topic>.md` are atomic concept nodes.
+- Cross-skill links use `[[../<other-skill>/references/<node>]]`.
+
+The six skills:
+- poke               — Node SDK + REST API + platform overview
+- poke-python        — Python SDK + MCP callbacks middleware (Python-only)
+- poke-webhooks      — condition/action triggers + wiring patterns (Vercel, GHA, cron)
+- poke-mcp-tunnel    — `poke login`, `poke mcp add`, `poke tunnel`
+- poke-recipes       — shareable install bundles, Kitchen, payouts
+- poke-integrations  — built-ins (Linear, Notion, GitHub, Sentry, Gmail, Outlook…) + custom MCP
+
+External authoritative docs (only after consulting the skills):
+- API:           https://poke.com/docs/api
+- All docs:      https://poke.com/docs
+- API keys:      https://poke.com/kitchen/api-keys (V2 keys only — V1 `pk_` is deprecated)
+- Node package:  https://www.npmjs.com/package/poke
+- Python pkg:    https://pypi.org/project/poke/
+
+Rules:
+1. Before recommending a method name, parameter, exception class, env var, or
+   endpoint, read the relevant skill node and verify. Cite the node path you
+   used (e.g. `skills/poke/references/send-webhook.md`).
+2. Never invent SDK methods, recipe fields, or integration names. If the skills
+   don't cover it, say so and ask — don't guess from training data.
+3. Prefer reading the specific `references/<node>.md` over the whole SKILL.md
+   when you know the area — it's cheaper on context and the graph is built for
+   exactly this kind of traversal.
+4. The Node and Python SDKs differ — snake_case in Python, plus a finer
+   exception hierarchy and the MCP callbacks module that Node lacks. Don't mix
+   them up.
+
+Smoke test: read `skills/poke-python/references/exceptions.md` and tell me which
+three exception subclasses Python exposes that Node's single PokeAuthError does
+not split out. (Answer: AuthenticationError, ForbiddenError, RateLimitError.)
+```
+
 ## What's included
 
 | Skill                | Use it when…                                                                                |
