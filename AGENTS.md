@@ -73,16 +73,14 @@ Don't introduce a new wikilink target without creating the corresponding file.
 ## Validation / dev environment
 
 ```bash
+# Install the spec validator (Python 3.11+; not on PyPI — install from source)
+pip install "git+https://github.com/agentskills/agentskills.git@main#subdirectory=skills-ref"
+
 # Validate every skill's SKILL.md against the Agent Skills spec
-npx -y @agentskills/skills-ref validate skills/poke
-npx -y @agentskills/skills-ref validate skills/poke-python
-npx -y @agentskills/skills-ref validate skills/poke-webhooks
-npx -y @agentskills/skills-ref validate skills/poke-mcp-tunnel
-npx -y @agentskills/skills-ref validate skills/poke-recipes
-npx -y @agentskills/skills-ref validate skills/poke-integrations
+for d in skills/*/; do skills-ref validate "$d"; done
 
 # Check for broken intra-repo wikilinks
-node scripts/check-links.mjs   # if/when this is added
+node scripts/check-wikilinks.mjs
 ```
 
 CI runs these on every PR. See `.github/workflows/validate.yml`.

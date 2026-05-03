@@ -17,6 +17,15 @@ jobs:
         with:
           node-version: 20
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install skills-ref
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "git+https://github.com/agentskills/agentskills.git@main#subdirectory=skills-ref"
+
       - name: Validate each skill against the Agent Skills spec
         run: |
           set -euo pipefail
@@ -24,7 +33,7 @@ jobs:
           for dir in skills/*/; do
             skill=$(basename "$dir")
             echo "::group::Validating $skill"
-            if ! npx -y @agentskills/skills-ref validate "$dir"; then
+            if ! skills-ref validate "$dir"; then
               echo "::error::Skill '$skill' failed spec validation"
               fail=1
             fi
