@@ -1,10 +1,17 @@
 {
-  // Skills are prose-heavy — relax line-length and allow inline HTML / duplicate headings across files.
+  // Skills are prose-heavy reference docs — relax stylistic rules that don't
+  // serve the skill format. Rules that catch real bugs (broken refs, bad
+  // syntax) stay on.
   "default": true,
-  "MD013": false,                // line length
-  "MD024": { "siblings_only": true },  // duplicate headings (allow same heading in different sections)
-  "MD033": false,                // inline HTML
-  "MD041": false,                // first line must be h1 (frontmatter trips this)
-  "MD036": false,                // emphasis used instead of heading (we use bold inline a lot)
-  "MD012": { "maximum": 2 }      // multiple blank lines
+  "MD012": { "maximum": 2 },        // multiple blank lines (allow up to 2)
+  "MD013": false,                   // line length
+  "MD024": { "siblings_only": true }, // duplicate headings (allow same heading in different sections)
+  "MD032": false,                   // blanks around lists (we use tight nested lists intentionally)
+  "MD033": false,                   // inline HTML
+  "MD034": false,                   // bare URLs (used in reference lists)
+  "MD036": false,                   // emphasis used as heading
+  "MD040": false,                   // fenced code language (some blocks are plain command output)
+  "MD041": false,                   // first line h1 (frontmatter trips this)
+  "MD056": false,                   // table column count (alignment hyphens trip false positives)
+  "MD060": false                    // table pipe alignment (em-dashes count as multi-byte)
 }
